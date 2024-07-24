@@ -16,6 +16,40 @@ class WordController extends GetxController {
     {
       'question': "Yerdagi to'q sariq tirnoq.",
       'answer': ['s', 'a', 'b', 'z', 'i']
+    },
+    {
+      'question': "Ortib, achchiq qizil meva, Oq dengizda suzar kema.",
+      'answer': ['d', 'a', 'z', 'm', 'o', 'l']
+    },
+    {
+      'question': "Tinmas bitta, Tinglar mingta.",
+      'answer': ['r', 'a', 'd', 'i', 'o']
+    },
+    {
+      'question': "Sen ichida tursang tikka, Olib chiqar yuksaklikka.",
+      'answer': ['l', 'i', 'f', 't']
+    },
+    {
+      'question': "Olmasang yarim nafas, Yo'ldan o'tgani qo'ymas.",
+      'answer': ['v', 'e', 'r', 'g', 'u', 'l']
+    },
+    {
+      'question': "Odamzodda nima ko'p?",
+      'answer': ['u', 'm', 'i', 'd']
+    },
+    {
+      'question': "Suv qaerda ustundek turadi?",
+      'answer': ['q', 'u', 'd', 'u', 'q']
+    },
+    {
+      'question':
+          "Besh harfdan iborat bo'lgan sichqon ushlaydigan qopqonni topa olasizmi?",
+      'answer': ['m', 'u', 's', 'h', 'u', 'k']
+    },
+    {
+      'question':
+          "Kunlardan bir kun chol o'g'liga o'ttiz tiyin berib shunday debdi: — O'g'lim, shu pulga narsa olib kelginki, biz ham, tovug'imiz ham, qo'zimiz ham to'yadigan bo'lsin. Bola nima olib kelishi kerak?",
+      'answer': ['q', 'o', 'v', 'u', 'n']
     }
   ];
 
@@ -53,6 +87,8 @@ class WordController extends GetxController {
   }
 
   void nextQuestion() {
-    currentQuestion++;
+    if (currentQuestion.value != 9) {
+      currentQuestion++;
+    }
   }
 }

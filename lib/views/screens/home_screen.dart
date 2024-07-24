@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guess_the_word/controllers/word_controller.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'sheep',
     'yes'
   ];
+
   List<String> userAnswer = [];
   List<String> answers = [];
 
@@ -80,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text(
-                          "0",
-                          style: TextStyle(
+                        child: Text(
+                          wordController.inCorrectAnswers.toString(),
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -110,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text(
-                          "1",
-                          style: TextStyle(
+                        child: Text(
+                          (wordController.currentQuestion.value + 1).toString(),
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -141,9 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text(
-                          "1",
-                          style: TextStyle(
+                        child: Text(
+                          wordController.correctAnswers.toString(),
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -246,16 +248,54 @@ class _HomeScreenState extends State<HomeScreen> {
                           answers[index] = '';
 
                           if (userAnswer.join('') ==
-                              wordController.question['answer'].join('')) {
+                                  wordController.question['answer'].join('') &&
+                              !userAnswer.contains('')) {
+                            wordController.incrementCorrect();
                             Get.defaultDialog(
                               title: "Correct 👍",
                               content: Image.asset(
                                   "assets/gifs/${gifs[Random().nextInt(10)]}.gif"),
                             );
-
+                            wordController.nextQuestion();
+                            if (wordController.currentQuestion.value == 9) {
+                              Lottie.asset('assets/congrats.json');
+                              // Get.defaultDialog();
+                            }
+                            answers = wordController.answers;
+                            userAnswer = List.generate(
+                              wordController.question['answer'].length,
+                              (index) {
+                                return '';
+                              },
+                            );
                             Future.delayed(const Duration(seconds: 3), () {
                               Get.back();
                             });
+                            currentUserAnswer = -1;
+                          } else if (!userAnswer.contains('') &&
+                              userAnswer.join('') !=
+                                  wordController.question['answer'].join('')) {
+                            Get.defaultDialog(
+                              title: "Incorrect 👎",
+                              content: Image.asset("assets/gifs/no.gif"),
+                            );
+                            wordController.nextQuestion();
+                            if (wordController.currentQuestion.value == 9) {
+                              Lottie.asset('assets/congrats.json');
+                              // Get.defaultDialog();
+                            }
+                            wordController.incrementInCorrect();
+                            answers = wordController.answers;
+                            userAnswer = List.generate(
+                              wordController.question['answer'].length,
+                              (index) {
+                                return '';
+                              },
+                            );
+                            Future.delayed(const Duration(seconds: 3), () {
+                              Get.back();
+                            });
+                            currentUserAnswer = -1;
                           }
 
                           if (currentUserAnswer < userAnswer.length - 1) {

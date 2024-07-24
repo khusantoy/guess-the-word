@@ -224,9 +224,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           userAnswer[currentUserAnswer] =
                               wordController.answers[index];
 
-                          try {
+                          if (currentUserAnswer < userAnswer.length - 1) {
                             currentUserAnswer++;
-                          } catch (e) {
+                          } else {
                             currentUserAnswer = 0;
                           }
                         });

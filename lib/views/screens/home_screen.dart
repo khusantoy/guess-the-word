@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guess_the_word/controllers/word_controller.dart';
@@ -14,6 +16,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int currentUserAnswer = 0;
 
+  List<String> gifs = [
+    'boy',
+    'boys',
+    'dance',
+    'dancing',
+    'man',
+    'minions',
+    'office',
+    'sheep',
+    'yes'
+  ];
   List<String> userAnswer = [];
   List<String> answers = [];
 
@@ -232,8 +245,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           userAnswer[currentUserAnswer] = answers[index];
                           answers[index] = '';
 
+                          if (userAnswer.join('') ==
+                              wordController.question['answer'].join('')) {
+                            Get.defaultDialog(
+                              title: "Correct 👍",
+                              content: Image.asset(
+                                  "assets/gifs/${gifs[Random().nextInt(10)]}.gif"),
+                            );
+
+                            Future.delayed(const Duration(seconds: 3), () {
+                              Get.back();
+                            });
+                          }
+
                           if (currentUserAnswer < userAnswer.length - 1) {
                             currentUserAnswer++;
+                            print("Index oshirildi");
                           } else {
                             currentUserAnswer = 0;
                           }

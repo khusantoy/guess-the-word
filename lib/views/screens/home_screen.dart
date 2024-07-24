@@ -15,10 +15,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentUserAnswer = 0;
 
   List<String> userAnswer = [];
+  List<String> answers = [];
 
   @override
   void initState() {
     super.initState();
+    answers = wordController.answers;
 
     userAnswer = List.generate(
       wordController.question['answer'].length,
@@ -187,8 +189,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 55,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 3, color: Colors.white),
+                          color: userAnswer[index] != ''
+                              ? Colors.lightGreen
+                              : Colors.white,
+                          border: Border.all(
+                              width: 3,
+                              color: userAnswer[index] != ''
+                                  ? Colors.lightGreen
+                                  : Colors.white),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
@@ -197,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -216,13 +224,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 15,
                   ),
-                  itemCount: wordController.answers.length,
+                  itemCount: answers.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          userAnswer[currentUserAnswer] =
-                              wordController.answers[index];
+                          userAnswer[currentUserAnswer] = answers[index];
+                          answers[index] = '';
 
                           if (currentUserAnswer < userAnswer.length - 1) {
                             currentUserAnswer++;
@@ -231,26 +239,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         });
                       },
-                      child: SizedBox(
-                        width: 55,
-                        height: 55,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.lightGreen,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              wordController.answers[index].toUpperCase(),
-                              style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                      child: answers[index] == ''
+                          ? const SizedBox()
+                          : SizedBox(
+                              width: 55,
+                              height: 55,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.lightGreen,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    answers[index].toUpperCase(),
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     );
                   },
                 ),

@@ -87,7 +87,7 @@ class WordController extends GetxController {
   }
 
   void nextQuestion() {
-    if (currentQuestion.value != 9) {
+    if (currentQuestion.value != questions.length - 1) {
       currentQuestion++;
     } else {
       currentQuestion.value = 0;

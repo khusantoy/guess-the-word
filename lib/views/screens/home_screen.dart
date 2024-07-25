@@ -253,6 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               !userAnswer.contains('')) {
                             wordController.incrementCorrect();
                             Get.defaultDialog(
+                              barrierDismissible: false,
                               title: "Correct 👍",
                               content: Image.asset(
                                   "assets/gifs/${gifs[Random().nextInt(8)]}.gif"),
@@ -262,6 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Future.delayed(const Duration(seconds: 4), () {
                                 Lottie.asset('assets/congrats.json');
                                 Get.defaultDialog(
+                                  barrierDismissible: false,
                                   title: "Your statistics",
                                   content: Column(
                                     children: [
@@ -279,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   confirm: FilledButton(
                                     onPressed: () {
                                       wordController.reset();
+                                      Get.back();
                                     },
                                     child: const Text("Again"),
                                   ),
@@ -300,6 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               userAnswer.join('') !=
                                   wordController.question['answer'].join('')) {
                             Get.defaultDialog(
+                              barrierDismissible: false,
                               title: "Incorrect 👎",
                               content: Image.asset("assets/gifs/no.gif"),
                             );
@@ -308,6 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Future.delayed(const Duration(seconds: 4), () {
                                 Lottie.asset('assets/congrats.json');
                                 Get.defaultDialog(
+                                  barrierDismissible: false,
                                   title: "Your statistics",
                                   content: Column(
                                     children: [
@@ -325,6 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   confirm: FilledButton(
                                     onPressed: () {
                                       wordController.reset();
+                                      Get.back();
                                     },
                                     child: const Text("Again"),
                                   ),
@@ -347,7 +353,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           if (currentUserAnswer < userAnswer.length - 1) {
                             currentUserAnswer++;
-                            print("Index oshirildi");
                           } else {
                             currentUserAnswer = 0;
                           }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:guess_the_word/controllers/word_controller.dart';
 import 'package:lottie/lottie.dart';
@@ -254,12 +255,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.defaultDialog(
                               title: "Correct 👍",
                               content: Image.asset(
-                                  "assets/gifs/${gifs[Random().nextInt(10)]}.gif"),
+                                  "assets/gifs/${gifs[Random().nextInt(8)]}.gif"),
                             );
                             wordController.nextQuestion();
-                            if (wordController.currentQuestion.value == 9) {
-                              Lottie.asset('assets/congrats.json');
-                              // Get.defaultDialog();
+                            if (wordController.currentQuestion.value == 0) {
+                              Future.delayed(const Duration(seconds: 4), () {
+                                Lottie.asset('assets/congrats.json');
+                                Get.defaultDialog(
+                                  title: "Your statistics",
+                                  content: Column(
+                                    children: [
+                                      Text(
+                                          "Correct answer: ${wordController.correctAnswers}"),
+                                      Text(
+                                          "Incorrect answer: ${wordController.inCorrectAnswers}")
+                                    ],
+                                  ),
+                                  cancel: TextButton(
+                                      onPressed: () {
+                                        SystemNavigator.pop();
+                                      },
+                                      child: const Text("Exit")),
+                                  confirm: FilledButton(
+                                    onPressed: () {
+                                      wordController.reset();
+                                    },
+                                    child: const Text("Again"),
+                                  ),
+                                );
+                              });
                             }
                             answers = wordController.answers;
                             userAnswer = List.generate(
@@ -280,9 +304,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               content: Image.asset("assets/gifs/no.gif"),
                             );
                             wordController.nextQuestion();
-                            if (wordController.currentQuestion.value == 9) {
-                              Lottie.asset('assets/congrats.json');
-                              // Get.defaultDialog();
+                            if (wordController.currentQuestion.value == 0) {
+                              Future.delayed(const Duration(seconds: 4), () {
+                                Lottie.asset('assets/congrats.json');
+                                Get.defaultDialog(
+                                  title: "Your statistics",
+                                  content: Column(
+                                    children: [
+                                      Text(
+                                          "Correct answer: ${wordController.correctAnswers}"),
+                                      Text(
+                                          "Incorrect answer: ${wordController.inCorrectAnswers}")
+                                    ],
+                                  ),
+                                  cancel: TextButton(
+                                      onPressed: () {
+                                        SystemNavigator.pop();
+                                      },
+                                      child: const Text("Exit")),
+                                  confirm: FilledButton(
+                                    onPressed: () {
+                                      wordController.reset();
+                                    },
+                                    child: const Text("Again"),
+                                  ),
+                                );
+                              });
                             }
                             wordController.incrementInCorrect();
                             answers = wordController.answers;

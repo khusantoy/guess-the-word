@@ -38,7 +38,7 @@ class WordController extends GetxController {
       'answer': ['u', 'm', 'i', 'd']
     },
     {
-      'question': "Suv qaerda ustundek turadi?",
+      'question': "Suv qayerda ustundek turadi?",
       'answer': ['q', 'u', 'd', 'u', 'q']
     },
     {
@@ -89,6 +89,13 @@ class WordController extends GetxController {
   void nextQuestion() {
     if (currentQuestion.value != 9) {
       currentQuestion++;
+    } else {
+      currentQuestion.value = 0;
     }
+  }
+
+  void reset() {
+    correctAnswers.value = 0;
+    inCorrectAnswers.value = 0;
   }
 }

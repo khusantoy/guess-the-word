@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:guess_the_word/controllers/word_controller.dart';
-import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -261,7 +260,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             wordController.nextQuestion();
                             if (wordController.currentQuestion.value == 0) {
                               Future.delayed(const Duration(seconds: 4), () {
-                                Lottie.asset('assets/congrats.json');
                                 Get.defaultDialog(
                                   barrierDismissible: false,
                                   title: "Your statistics",
@@ -280,8 +278,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: const Text("Exit")),
                                   confirm: FilledButton(
                                     onPressed: () {
-                                      wordController.reset();
-                                      Get.back();
+                                      setState(() {
+                                        wordController.reset();
+                                        Get.back();
+                                      });
                                     },
                                     child: const Text("Again"),
                                   ),
@@ -310,7 +310,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             wordController.nextQuestion();
                             if (wordController.currentQuestion.value == 0) {
                               Future.delayed(const Duration(seconds: 4), () {
-                                Lottie.asset('assets/congrats.json');
                                 Get.defaultDialog(
                                   barrierDismissible: false,
                                   title: "Your statistics",
@@ -329,8 +328,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: const Text("Exit")),
                                   confirm: FilledButton(
                                     onPressed: () {
-                                      wordController.reset();
-                                      Get.back();
+                                      setState(() {
+                                        wordController.reset();
+                                        Get.back();
+                                      });
                                     },
                                     child: const Text("Again"),
                                   ),

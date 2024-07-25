@@ -95,7 +95,7 @@ class WordController extends GetxController {
   }
 
   void reset() {
-    correctAnswers.value = 0;
-    inCorrectAnswers.value = 0;
+    correctAnswers = 0.obs;
+    inCorrectAnswers = 0.obs;
   }
 }
